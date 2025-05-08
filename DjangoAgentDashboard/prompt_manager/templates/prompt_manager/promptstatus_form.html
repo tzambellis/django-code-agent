@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-lg mx-auto mt-5">
+    <h2 class="text-xl font-semibold mb-2">Update Prompt Status</h2>
+    <form method="post"> {% csrf_token %} <div class="mb-4"> <label for="id_status"
+                class="block text-sm font-medium text-gray-700">Status</label> <select id="id_status" name="status"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500">
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+            </select> </div>
+        <div class="flex justify-end"> <button type="submit"
+                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Update</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

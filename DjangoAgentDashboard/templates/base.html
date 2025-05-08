@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Django Code Agent{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-900 min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex space-x-4 items-center">
+                    <a href="/prompts" class="text-lg font-bold text-blue-600 hover:text-blue-800">Django Code Agent</a>
+                    <a href="{% url 'prompt_list' %}" class="text-gray-700 hover:text-blue-600 text-sm">Prompts</a>
+                    <a href="{% url 'user_settings' %}" class="text-gray-700 hover:text-blue-600 text-sm">Settings</a>
+                </div>
+
+
+                <div class="flex items-center space-x-4">
+                    {% if user.is_authenticated %}
+                    <span class="text-sm text-gray-600">Hi, {{ user.username }}</span>
+                    <a href="{% url 'account_logout' %}"
+                        class="text-sm bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Logout</a>
+                    {% else %}
+                    <a href="{% url 'account_login' %}"
+                        class="text-sm bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Login</a>
+                    <a href="{% url 'account_signup' %}"
+                        class="text-sm bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Sign Up</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page content -->
+    <main class="py-8 px-4 sm:px-6 lg:px-8">
+        {% if messages %}
+        <div class="max-w-3xl mx-auto mb-4">
+            {% for message in messages %}
+            <div class="mb-3 rounded px-4 py-3 text-sm
+                {% if message.tags == 'error' %}
+                bg-red-100 text-red-800
+                {% elif message.tags == 'success' %}
+                bg-green-100 text-green-800
+                {% elif message.tags == 'warning' %}
+                bg-yellow-100 text-yellow-800
+                {% else %}
+                bg-blue-100 text-blue-800
+                {% endif %}
+            ">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+services:
+  redis:
+    image: redis:latest
+    restart: always
+
+  web:
+    build: .
+    container_name: django_app
+    environment:
+      DOCKER: "true"
+    command: >
+      sh -c "printenv $DOCKER && cd DjangoAgentDashboard && python manage.py migrate &&
+             gunicorn DjangoAgentDashboard.wsgi:application --bind 0.0.0.0:8000"
+    volumes:
+      - .:/app
+      - project_data:/tmp 
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+
+  worker:
+    build: .
+    container_name: django_celery_worker
+    environment:
+      DOCKER: "true"
+    command: sh -c "cd DjangoAgentDashboard && celery -A DjangoAgentDashboard.celery worker -B"
+    volumes:
+      - .:/app
+      - project_data:/tmp 
+    depends_on:
+      - redis
+
+volumes:
+  project_data:

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-lg mx-auto mt-5">
+    <h2 class="text-xl font-semibold mb-2">Update API Key</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- Global form errors -->
+        {% if form.non_field_errors %}
+            <div class="mb-4 text-red-600 text-sm">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- API Key field -->
+        <div class="mb-4">
+            <label for="id_api_key" class="block text-sm font-medium text-gray-700">API Key</label>
+            <input type="text" id="id_api_key" name="api_key"
+                   value="{{ form.api_key.value|default_if_none:'' }}"
+                   class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500">
+
+            {% if form.api_key.errors %}
+                <p class="text-sm text-red-600 mt-1">
+                    {{ form.api_key.errors.0 }}
+                </p>
+            {% endif %}
+        </div>
+
+        <div class="flex justify-end">
+            <button type="submit"
+                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                Update
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

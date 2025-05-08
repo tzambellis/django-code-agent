@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-2xl mx-auto mt-5">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">Prompt List</h2>
+        <a href="{% url 'create_prompt' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm">
+            + Add New Prompt
+        </a>
+    </div>
+
+    <!-- 🔐 GitLab Key Check -->
+    <!-- <div class="mb-4">
+        {% if gitlab_key %}
+        <p class="text-sm text-green-600">✅ GitLab Key is set.</p>
+        {% else %}
+        <a href="{% url 'update_gitlab_key' %}"
+            class="inline-block bg-red-500 text-white px-4 py-2 text-sm rounded hover:bg-red-600">
+            ➕ Set GitLab Key
+        </a>
+        {% endif %}
+    </div> -->
+
+    <!-- 🔐 API Key Check -->
+    <div class="mb-4">
+        {% if user_api_key %}
+        <p class="text-sm text-green-600">✅ API Key is set.</p>
+        {% else %}
+        <a href="{% url 'update_api_key' %}"
+            class="inline-block bg-red-500 text-white px-4 py-2 text-sm rounded hover:bg-red-600">
+            ➕ Set API Key
+        </a>
+        {% endif %}
+    </div>
+
+    <!-- 🔁 Prompt List -->
+    <ul class="divide-y divide-gray-200">
+        {% for prompt in prompts %}
+        <li class="py-4 flex justify-between items-center">
+            <div>
+                <p class="text-sm font-medium text-gray-900">{{ prompt.text }}</p>
+                <p class="text-sm text-gray-500">Created at: {{ prompt.created_at }}</p>
+    
+                {% if prompt.status_list %}
+                    <p class="text-sm text-green-600">Status: {{ prompt.status_list.0.status }}</p>
+    
+                    {% if prompt.status_list.0.status == "succeed" %}
+                        <a href="{% url 'download_project_zip' prompt.id %}"
+                           class="text-sm text-blue-600 hover:underline block mt-1">
+                            ⬇️ Download Project ZIP
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <p class="text-sm text-gray-400 italic">No status yet</p>
+                {% endif %}
+            </div>
+    
+            <form method="post" action="{% url 'delete_prompt' prompt.pk %}"
+                  onsubmit="return confirm('Are you sure you want to delete this prompt?');">
+                {% csrf_token %}
+                <button type="submit" class="text-sm text-red-600 hover:underline">Delete</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+</div>
+{% endblock %}
