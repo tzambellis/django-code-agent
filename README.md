@@ -55,7 +55,7 @@ This will:
    ```
 
 4. **Login**:
-Use the credentials ***admin** for username and password.
+Use the credentials **admin** for username and password.
 ---
 
 ## 🧩 Services
