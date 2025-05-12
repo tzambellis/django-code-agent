@@ -34,3 +34,56 @@ Before you can test the project with Docker, make sure you have:
    ```bash
    git clone <REPO_URL>
    cd DjangoAgentDashboard
+   ```
+
+2. **Start all services (web, Celery worker, Redis)**:
+
+   ```bash
+   docker compose up --build
+   ```
+
+This will:
+- Build the Django app container
+- Start the Redis broker
+- Run Celery worker in parallel
+- Automatically apply migrations and start Gunicorn
+
+
+3. **Open the app in your browser:**:
+   ```bash
+    http://localhost:8000/
+   ```
+
+---
+
+## 🧩 Services
+
+- web: Django app via Gunicorn (port 8000)
+- worker: Celery worker (internal)
+- redis: Redis message broker (port 6379)
+
+---
+
+## 🗂 Notes
+
+- Celery saves generated Django apps to /tmp/project_<id>
+- A shared Docker volume makes it accessible to Django for download
+- Download link appears when a prompt finishes with status "succeed"
+
+---
+
+## 🧪 Testing
+
+Manual testing via the web UI. Automated tests coming later.
+
+---
+
+## 🧹 Cleanup
+
+To stop everything and remove volumes:
+
+   ```bash
+   docker compose down --volumes
+   ```
+
+---
