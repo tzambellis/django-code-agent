@@ -51,9 +51,11 @@ This will:
 
 3. **Open the app in your browser:**:
    ```bash
-    http://localhost:8000/
+    http://localhost:8000/accounts/login
    ```
 
+4. **Login**:
+Use the credentials ***admin** for username and password.
 ---
 
 ## 🧩 Services
