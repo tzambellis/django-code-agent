@@ -33,7 +33,7 @@ Before you can test the project with Docker, make sure you have:
 
    ```bash
    git clone <REPO_URL>
-   cd DjangoAgentDashboard
+   cd django-codegen-agents
    ```
 
 2. **Start all services (web, Celery worker, Redis)**:
